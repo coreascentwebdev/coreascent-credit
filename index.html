@@ -223,19 +223,38 @@
         .how { padding: 5rem 2rem; background: var(--white); }
         .how-inner { max-width: 900px; margin: 0 auto; }
 
-        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 3rem; position: relative; }
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0;
+            margin-top: 3rem;
+            position: relative;
+        }
 
-        .steps::before {
-            content: '';
+        .step {
+            text-align: center;
+            position: relative;
+            padding: 0 1rem;
+            width: 33.333%;
+            min-width: 200px;
+        }
+
+        /* Connector line between steps - only on desktop when all fit in a row */
+        .steps-connector {
+            display: none;
             position: absolute;
             top: 24px;
             left: 16.66%;
             right: 16.66%;
             height: 2px;
             background: linear-gradient(90deg, var(--teal), var(--gold));
+            pointer-events: none;
         }
 
-        .step { text-align: center; position: relative; padding: 0 1rem; }
+        @media (min-width: 769px) {
+            .steps-connector { display: block; }
+        }
 
         .step-num {
             width: 50px; height: 50px;
@@ -251,8 +270,6 @@
             position: relative;
             z-index: 1;
         }
-
-        .step:last-child .step-num { background: var(--gold); }
 
         .step h4 { font-size: 1.05rem; color: var(--navy); margin-bottom: 0.5rem; }
         .step p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
@@ -420,8 +437,8 @@
                 transition: all 0.3s ease;
             }
             nav.open { transform: translateY(0); opacity: 1; pointer-events: all; }
-            .steps { grid-template-columns: 1fr; gap: 2rem; }
-            .steps::before { display: none; }
+            .step { width: 100%; }
+            .steps { gap: 2rem; }
         }
 
         @keyframes fadeInUp {
@@ -515,6 +532,7 @@
                 <p>Four simple steps between you and the care or services you need.</p>
             </div>
             <div class="steps">
+                <div class="steps-connector"></div>
                 <div class="step">
                     <div class="step-num">1</div>
                     <h4>Submit a Short Form</h4>
